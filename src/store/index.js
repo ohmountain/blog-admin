@@ -1,5 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
 import createLogger from 'redux-logger';
-import PostsReducer from '../reducer/posts.js';
+import AppReducer from '../reducer/index.js';
 
-export default createStore(PostsReducer, applyMiddleware(createLogger));
+export default createStore(AppReducer, applyMiddleware(createLogger));

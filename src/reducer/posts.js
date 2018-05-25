@@ -20,7 +20,7 @@ const put_post = (state = '', action) => {
     return state;
 };
 
-export default combineReducers({
+export {
     get_post,
     put_post
-});
+};

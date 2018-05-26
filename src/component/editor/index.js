@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import SimpleMDE from 'simplemde';
 import marked from 'marked'
 import highlight from 'highlight.js'
-import { Input, Icon, Select, Divider, Row, Col, Button } from 'antd';
+import { Input, Icon, Select, Divider, Row, Col, Button, Spin } from 'antd';
+
+import { get_category } from '../../action/posts.js';
 
 class Editor extends Component {
 
@@ -34,18 +37,28 @@ class Editor extends Component {
                 });
             },
         })
+
+        setTimeout(() => {
+            this.props.dispatch(get_category());
+        }, 2000);
+    }
+
+    renderCategory() {
+        return this.props.category.map((c, i) => {
+            return (<Select.Option key={i} value={c.id}>{c.title}</Select.Option>);
+        });
+    }
+
+    isSpinning() {
+        return this.props.category.size < 1;
     }
 
     render() {
-        return <div className='editor-wrapper'>
+
+        return <Spin spinning={ this.isSpinning() }  tip="获取分类中"><div className='editor-wrapper'>
             <Input placeholder='标题'/>
             <Divider>选择分类</Divider>
-            <Select showSearch style={{ width: '100%' }} placeholder="请选择分类">
-                <Select.Option value="1">1</Select.Option>
-                <Select.Option value="2">2</Select.Option>
-                <Select.Option value="3">3</Select.Option>
-                <Select.Option value="4">4</Select.Option>
-            </Select>
+            <Select showSearch style={{ width: '100%' }} placeholder="请选择分类">{ this.renderCategory() }</Select>
 
             <Divider>请下下方输入文章内容</Divider>
             <textarea ref={ this.editor } />
@@ -53,9 +66,18 @@ class Editor extends Component {
             <Row gutter={24}>
                 <Col span={6} offset={9}><Button type="primary" size="large">保存</Button></Col>
             </Row>
-        </div>;
+        </div></Spin>;
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        category: state.category
+    }
+}
 
-export default Editor;
+const mapDispatchToProps = dispatch => {
+    return { dispatch };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

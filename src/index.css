@@ -1,4 +1,6 @@
 @import '~antd/dist/antd.css';
+@import '~simplemde/dist/simplemde.min.css';
+@import '~highlight.js/styles/googlecode.css';
 
 .logo {
     width: 120px;

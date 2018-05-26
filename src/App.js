@@ -10,7 +10,6 @@ import UserIndex from './component/user/index.js';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
-const SubMenu = Menu.SubMenu;
 
 
 class App extends Component {
